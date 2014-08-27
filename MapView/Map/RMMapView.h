@@ -356,6 +356,15 @@ typedef NS_ENUM(NSUInteger, RMMapDecelerationMode) {
 @property (nonatomic, assign) CGSize clusterMarkerSize;
 @property (nonatomic, assign) CGSize clusterAreaSize;
 
+
+/** Whether to turn clustering off above a certain zoom level. Only relevant if clustering is enabled. Defaults to `NO`. */
+@property (nonatomic, assign) BOOL enableClusteringByZoomLevel;
+
+
+/** Zoom level where clustering is on (below) or off (above). Only relevant if clustering by zoom level is enabled. Defaults to `NO`. */
+@property (nonatomic, assign) float zoomLevelForClustering;
+
+
 @property (nonatomic, readonly) RMTileSourcesContainer *tileSourcesContainer;
 
 /** @name Managing Tile Sources */

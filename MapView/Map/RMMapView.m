@@ -2668,9 +2668,17 @@
         boundingBox.origin.y -= boundingBoxBuffer;
         boundingBox.size.width += (2.0 * boundingBoxBuffer);
         boundingBox.size.height += (2.0 * boundingBoxBuffer);
+        
+        
+        BOOL clusterAnnotationsAtThisZoomLevel = self.enableClustering;
+        if (self.enableClustering && self.enableClusteringByZoomLevel) {
+            if (self.zoom > self.zoomLevelForClustering) {
+                clusterAnnotationsAtThisZoomLevel = NO;
+            }
+        }
 
         NSArray *annotationsToCorrect = [self.quadTree annotationsInProjectedRect:boundingBox
-                                                         createClusterAnnotations:self.enableClustering
+                                                         createClusterAnnotations:clusterAnnotationsAtThisZoomLevel
                                                          withProjectedClusterSize:RMProjectedSizeMake(self.clusterAreaSize.width * _metersPerPixel, self.clusterAreaSize.height * _metersPerPixel)
                                                     andProjectedClusterMarkerSize:RMProjectedSizeMake(self.clusterMarkerSize.width * _metersPerPixel, self.clusterMarkerSize.height * _metersPerPixel)
                                                                 findGravityCenter:self.positionClusterMarkersAtTheGravityCenter];
