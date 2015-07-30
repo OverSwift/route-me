@@ -52,6 +52,7 @@
 @synthesize position;
 @synthesize quadTreeNode;
 @synthesize isUserLocationAnnotation;
+@synthesize clusteredAnnotations;
 
 + (instancetype)annotationWithMapView:(RMMapView *)aMapView coordinate:(CLLocationCoordinate2D)aCoordinate andTitle:(NSString *)aTitle
 {
@@ -189,6 +190,11 @@
 - (void)setIsUserLocationAnnotation:(BOOL)flag
 {
     isUserLocationAnnotation = flag;
+}
+
+- (NSArray *)clusteredAnnotations
+{    
+    return ((RMQuadTreeNode *)self.userInfo).clusteredAnnotations ? ((RMQuadTreeNode *)self.userInfo).clusteredAnnotations : [NSArray array];
 }
 
 #pragma mark -

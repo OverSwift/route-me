@@ -97,6 +97,7 @@
 
 // This is for the QuadTree. Don't mess this up.
 @property (nonatomic, assign) RMQuadTreeNode *quadTreeNode;
+@property (nonatomic, readonly, assign) NSArray *clusteredAnnotations;
 
 /** @name Filtering Types of Annotations */
 

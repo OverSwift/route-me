@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		8317B2F71B6A5AE50060D758 /* Proj4Universal */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 8317B2FA1B6A5AE50060D758 /* Build configuration list for PBXAggregateTarget "Proj4Universal" */;
+			buildPhases = (
+				8317B2FB1B6A5AFC0060D758 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Proj4Universal;
+			productName = Proj4Universal;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		160E11F614E00054000E5EFB /* PJ_gstmerc.c in Sources */ = {isa = PBXBuildFile; fileRef = 160E11F314E00054000E5EFB /* PJ_gstmerc.c */; };
 		160E11F714E00054000E5EFB /* pj_initcache.c in Sources */ = {isa = PBXBuildFile; fileRef = 160E11F414E00054000E5EFB /* pj_initcache.c */; };
@@ -621,6 +635,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0640;
+				TargetAttributes = {
+					8317B2F71B6A5AE50060D758 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+				};
 			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "Proj4" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -638,9 +657,26 @@
 			projectRoot = "";
 			targets = (
 				D2AAC07D0554694100DB518D /* Proj4 */,
+				8317B2F71B6A5AE50060D758 /* Proj4Universal */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8317B2FB1B6A5AFC0060D758 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target Proj4 ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target Proj4 -configuration ${CONFIGURATION} -sdk iphonesimulator -arch i386 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"\n\n# Last touch. copy the header files. Just for convenience\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D2AAC07B0554694100DB518D /* Sources */ = {
@@ -881,6 +917,20 @@
 			};
 			name = Release;
 		};
+		8317B2F81B6A5AE50060D758 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		8317B2F91B6A5AE50060D758 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -901,6 +951,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		8317B2FA1B6A5AE50060D758 /* Build configuration list for PBXAggregateTarget "Proj4Universal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8317B2F81B6A5AE50060D758 /* Debug */,
+				8317B2F91B6A5AE50060D758 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
